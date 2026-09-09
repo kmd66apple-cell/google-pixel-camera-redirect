@@ -10,7 +10,7 @@ class HostPhotoPagerActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         try {
-            val intent = packageManager.getLaunchIntentForPackage("app.alextran.immich")
+            val intent = packageManager.getLaunchIntentForPackage("app.revanced.android.photos")
             if (intent != null) {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
