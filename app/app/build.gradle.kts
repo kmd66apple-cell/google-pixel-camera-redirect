@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.google.android.apps.photos"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.google.android.apps.photos"
@@ -34,5 +34,5 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
+    // 依存関係を完全に削除し、外部ライブラリのエラーを防止
 }
