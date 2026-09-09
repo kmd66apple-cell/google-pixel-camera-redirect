@@ -34,5 +34,5 @@ android {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    // 依存ライブラリ不要（Android標準のActivityクラスを使用）
 }
