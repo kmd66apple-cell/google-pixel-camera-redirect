@@ -34,5 +34,5 @@ android {
 }
 
 dependencies {
-    // 依存関係を完全に削除し、外部ライブラリのエラーを防止
+    implementation("androidx.appcompat:appcompat:1.6.1")
 }
