@@ -21,17 +21,25 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      # 通常の push 時に Debug APK を作成
+      # gradle wrapper に実行権限を付与して実行（app フォルダ内にある場合は cd app で対応）
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: |
+          if [ -f "./gradlew" ]; then
+            chmod +x ./gradlew
+            ./gradlew assembleDebug
+          elif [ -f "./app/gradlew" ]; then
+            cd app
+            chmod +x ./gradlew
+            ./gradlew assembleDebug
+          else
+            echo "gradlew not found" && exit 1
+          fi
 
-      # ビルドされた APK を Artifacts としてアップロード（画面からダウンロード可能にする）
       - uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: app/app/build/outputs/apk/debug/*.apk
+          path: "**/build/outputs/apk/debug/*.apk"
 
-      # タグ打ち時のみ Release ビルドを実行して GitHub Release に公開
       - name: Resolve version from tag
         id: v
         if: github.ref_type == 'tag'
@@ -44,4 +52,4 @@ jobs:
       - uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
         with:
-          files: app/app/build/outputs/apk/debug/*.apk
+          files: "**/build/outputs/apk/debug/*.apk"
