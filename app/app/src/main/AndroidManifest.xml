@@ -1,27 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="Photos Redirect"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <activity
-            android:name=".HostPhotoPagerActivity"
-            android:exported="true">
+            android:name=".pager.HostPhotoPagerActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:showWhenLocked="true"
+            android:theme="@style/Theme.AppCompat.Translucent">
+            
+            <!-- Google Camera のサムネイルタップ時のレビュー要求を受け取る -->
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.provider.action.REVIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:mimeType="image/*" />
+                <data android:mimeType="video/*" />
             </intent-filter>
+
+            <!-- 標準的な画像/動画表示の要求も受けるように設定 -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
                 <data android:mimeType="image/*" />
+                <data android:mimeType="video/*" />
             </intent-filter>
         </activity>
-
     </application>
+
+    <!-- Android 11以降で転送先（ReVanced）アプリの存在を検出するために指定 -->
+    <queries>
+        <package android:name="com.google.android.apps.photos.revanced" />
+    </queries>
 
 </manifest>
